@@ -6,35 +6,22 @@ import "../index.css";
 const ContactSection = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-const handleSubmit = async (e) => {
+
+  const handleSubmit = async (e) => {
   e.preventDefault();
   setIsSubmitting(true);
-
   const form = e.target;
 
   try {
-    // 1️⃣ Send message to you
+    // Only send message to YOU
     await emailjs.sendForm(
-      "service_ol226ol",       // Your Service ID
-      "template_ijfdgda",      // Your Template ID for messages to you
-      form,
-      "PamrmSpV-hras1f43"      // Your Public Key / User ID
-    );
-
-    // 2️⃣ Send auto-reply to sender
-    await emailjs.send(
       "service_ol226ol",
-      "template_kx263r4",    // Your Template ID for auto-reply
-      {
-        to_name: form.name.value,
-        to_email: form.email.value,
-        from_name: "Vaishnavi Bharti",
-        message: "Thank you for reaching out! I'll get back to you soon."
-      },
+      "template_ijfdgda", // my template that sends to your email
+      form,
       "PamrmSpV-hras1f43"
     );
 
-    alert("Message sent successfully! An auto-reply has been sent to you.");
+    alert("Message sent successfully!");
     form.reset();
   } catch (error) {
     console.error("EmailJS error:", error);
@@ -43,6 +30,8 @@ const handleSubmit = async (e) => {
     setIsSubmitting(false);
   }
 };
+
+
 
   return (
     <section id="contact" className="contact-section">
